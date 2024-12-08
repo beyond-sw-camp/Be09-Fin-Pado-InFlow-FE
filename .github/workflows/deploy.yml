@@ -26,12 +26,10 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd inflow
         npm install
 
     - name: Build project
       run: |
-        cd inflow
         npm run build
 
     - name: Install AWS CLI
@@ -50,10 +48,10 @@ jobs:
     - name: Generate deployment package
       run: |
         mkdir -p deploy
-        cp -r inflow/dist deploy/  # dist 디렉토리를 명시적으로 복사
-        cp inflow/package.json deploy/
-        cp inflow/server.js deploy/
-        cp inflow/Procfile deploy/
+        cp -r dist deploy/  # dist 디렉토리를 명시적으로 복사
+        cp package.json deploy/
+        cp server.js deploy/
+        cp Procfile deploy/
         cd deploy && zip -r deploy.zip .
 
     - name: Beanstalk Deploy
