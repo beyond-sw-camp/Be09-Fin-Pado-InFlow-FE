@@ -59,6 +59,9 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: inflow-front1
         environment_name: Inflow-front1-env
-        version_label: github-action-${{ github.sha }}
+        version_label: github-action-${{ github.sha }}-${{ github.run_id }}
         region: ap-northeast-2
         deployment_package: deploy/deploy.zip
+        use_existing_version_if_available: false
+        wait_for_deployment: true
+        wait_for_environment_recovery: 300
