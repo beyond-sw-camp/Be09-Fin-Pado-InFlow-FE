@@ -6,7 +6,7 @@ permissions:
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
+    types: [ opened, reopened, synchronize ]
   push:
     branches:
       - "main"
@@ -25,12 +25,10 @@ jobs:
         node-version: '20'
 
     - name: Install dependencies
-      run: |
-        npm install
+      run: npm install
 
     - name: Build project
-      run: |
-        npm run build
+      run: npm run build
 
     - name: Install AWS CLI
       run: |
@@ -48,10 +46,10 @@ jobs:
     - name: Generate deployment package
       run: |
         mkdir -p deploy
-        cp -r dist deploy/
+        cp -r dist deploy/  # dist 디렉토리를 포함
         cp package.json deploy/
-        cp server.js deploy/
-        cp Procfile deploy/
+        cp server.js deploy/ 
+        cp Procfile deploy/Procfile
         cd deploy && zip -r deploy.zip .
 
     - name: Beanstalk Deploy
@@ -59,11 +57,8 @@ jobs:
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        application_name: inflow-v
-        environment_name: Inflow-v-env
+        application_name: inflow-front1
+        environment_name: Inflow-front1-env
         version_label: github-action-${{ github.sha }}
         region: ap-northeast-2
         deployment_package: deploy/deploy.zip
-        use_existing_version_if_available: false
-        wait_for_deployment: true
-        wait_for_environment_recovery: 300
